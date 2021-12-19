@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery Album</title>
+    <style>
+        table{
+            /* border: 1px solid black; */
+          width: 100%;
+          background-color: rgb(230, 221, 221);
+        }
+        td,th{
+            border:1px solid red;
+            text-align: center;
+            font-weight: 800;
+        }
+        td{
+            color: rgb(1, 4, 146);
+        }
+        img{
+            height: 150px;
+            width: 200px;
+            box-shadow: 2px 2px 10px black;
+        }
+     
+    </style>
+</head>
+<body onload="getMobileDetails()">
+    <div class="header" align="center">
+        <h2>Display data using Json And Ajax concept</h2>
+    </div>
+    <div id="table-data">
+
+    </div>
+    <script>
+        function getMobileDetails(){
+        var request = new XMLHttpRequest();
+        request.open("GET","https://api.jsonbin.io/b/61bf06c7435982298610fe3c");
+        request.setRequestHeader("secret-key", "$2b$10$rXJgb5IiS60Jt7b7ZT889uxdkW01WIInNbMc4EgmdXmSTbH.8sBDC");
+        request.send();
+        var data = "";
+        var display = "";
+      request.onload = function(){
+             data = JSON.parse(this.response);
+            console.log(data);
+            display+= '<table>\
+                <tr><th>BRAND</th><th>MODEL</th><th>RAM</th><th>STORAGE</th><th>PRICE</th>  <th>IMAGE</th></tr>';
+       for(let i=0;i<data.length;i++){
+        display+= '<tr><td>'+data[i].brand+'</td><td>'+data[i].model+'</td><td>'+data[i].ram+'</td><td>'+data[i].storage+'</td><td>'+data[i].price+'</td><td class="phone-img"><img src="'+data[i].image+'" class="phone-img"></td></tr>\
+            '
+
+                }
+                document.getElementById("table-data").innerHTML = display;
+       }
+      
+           
+            }
+
+    </script>
+</body>
+</html>
